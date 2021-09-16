@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "236743556994",
+    "project_id": "reactnative-5b22f",
+    "storage_bucket": "reactnative-5b22f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236743556994:android:09c1f427d91fa71b75199b",
+        "android_client_info": {
+          "package_name": "com.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "236743556994-t3hsu1ictp2cafpkqe59ip3pvloo5egb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDku434Q1MVq0IwzUYMGAncLy9tMv5hFwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "236743556994-t3hsu1ictp2cafpkqe59ip3pvloo5egb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236743556994:android:f7f24cff2ce503ee75199b",
+        "android_client_info": {
+          "package_name": "com.reactnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "236743556994-t3hsu1ictp2cafpkqe59ip3pvloo5egb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDku434Q1MVq0IwzUYMGAncLy9tMv5hFwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "236743556994-t3hsu1ictp2cafpkqe59ip3pvloo5egb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

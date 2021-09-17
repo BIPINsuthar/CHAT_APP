@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, StatusBar, Image, KeyboardAvoidingView, TouchableOpacityBase, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, StatusBar, Image, KeyboardAvoidingView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { TextInput, Button } from 'react-native-paper'
 import { launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage'
+import auth from '@react-native-firebase/auth'
+import firebase from '@react-native-firebase/storage';
 import 'react-native-get-random-values';
-import { v4 as uuidv4 } from 'uuid';
 
 export default function SignUp({ navigation }) {
     const [email, Setemail] = useState('')
@@ -12,32 +13,52 @@ export default function SignUp({ navigation }) {
     const [pass, setPass] = useState('')
     const [image, Setimage] = useState('')
     const [next, Setnext] = useState(false)
+    const [loading, setLoading] = useState(false)
 
+    if (loading) {
+        <ActivityIndicator size="large" color="green" />
+    }
+    const userSingUp = async () => {
+        setLoading(true)
+        if (!email || !name || !pass || !email) {
+            alert('please fill all the fields')
+        }
+        try {
+            const result = await auth().createUserWithEmailAndPassword(email, pass);
+            firebase().collection('users').doc(result.user.uid).set({
+                name: name,
+                email: result.user.email,
+                uid: result.user.uid,
+                image: image
+            })
+            setLoading(false)
+        }
+        catch (err) {
+            alert(err)
+            console.log(err)
+        }
+    }
     const pickImageAndUpload = () => {
         launchImageLibrary({ quality: 0.5 }, (fileobj) => {
-            console.log(fileobj)
-            const uploadTask = storage().ref().child(`/userProfile/${uuidv4()}`).putFile(fileobj.uri)
+            console.log(fileobj.assets[0].uri)
+            const uploadTask = storage().ref().child(`/userProfile/${Date.now()}`).putFile(fileobj.assets[0].uri)
             uploadTask.on('state_changed',
                 (snapshot) => {
                     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                     console.log('Upload is ' + progress + '% done');
-                    switch (snapshot.state) {
-                        case firebase.storage.TaskState.PAUSED: // or 'paused'
-                            console.log('Upload is paused');
-                            break;
-                        case firebase.storage.TaskState.RUNNING: // or 'running'
-                            console.log('Upload is running');
-                            break;
+                    if (progress == 100) {
+                        alert('uploaded successfully')
                     }
                 },
                 (error) => {
-                    // Handle unsuccessful uploads
+                    console.log('error while uploading image')
                 },
                 () => {
                     // Handle successful uploads on complete
                     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                     uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                         console.log('File available at', downloadURL);
+                        Setimage(downloadURL)
                     });
                 }
             );
@@ -86,7 +107,9 @@ export default function SignUp({ navigation }) {
                             />
                             <Button mode="contained" style={styles.btn}
                                 onPress={() => pickImageAndUpload()}>Select profile pic</Button>
-                            <Button mode="contained" style={styles.btn}>SIGN UP</Button>
+                            <Button mode="contained" style={styles.btn}
+                                onPress={() => userSingUp()}
+                                disabled={image ? false : true}>SIGN UP</Button>
                         </> : null
                 }
 
@@ -143,5 +166,4 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: 'bold'
     }
-
 })

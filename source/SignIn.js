@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, StatusBar, Image, KeyboardAvoidingView, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, StatusBar, Image, KeyboardAvoidingView, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native'
 import { TextInput, Button } from 'react-native-paper'
 import auth from '@react-native-firebase/auth'
 
@@ -8,9 +8,6 @@ export default function SingIn({ navigation }) {
     const [pass, setPass] = useState('')
     const [loading, setLoading] = useState(false)
 
-    if (loading) {
-        <ActivityIndicator size="large" color="green" />
-    }
     const userLogin = async () => {
         setLoading(true)
         if (!email || !pass) {
@@ -27,14 +24,17 @@ export default function SingIn({ navigation }) {
         catch (err) {
             alert(err)
         }
-
     }
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="position">
-            <StatusBar barStyle="light-content" backgroundColor="green" />
+        <ScrollView style={styles.container} behavior="position">
+            <StatusBar barStyle="light-content" backgroundColor="#00bcd4" />
+            {
+                loading ?
+                    <ActivityIndicator size="large" color="#00bcd4" /> : null
+            }
             <View style={styles.logo_View}>
-                <Text style={styles.header_text}>Welcome to whatsapp</Text>
-                <Image source={require('../assests/images/WhatsApp.svg.webp')} style={styles.image} />
+                <Text style={styles.header_text}>Welcome to Chat_App</Text>
+                <Image source={require('../assests/images/images.jpg')} style={styles.image} />
             </View>
             <View style={styles.textinput_view}>
                 <TextInput
@@ -55,14 +55,14 @@ export default function SingIn({ navigation }) {
                 />
 
                 <Button mode="contained" style={styles.btn}
-                    onPress={() => userLogin()}
+                    onPress={() => { userLogin() }}
                 >Sing In</Button>
                 <TouchableOpacity style={styles.link}
-                    onPress={() => navigation.goBack()}>
+                    onPress={() => navigation.navigate('SignUp')}>
                     <Text style={styles.link_text}>Don't have account?</Text>
                 </TouchableOpacity>
             </View>
-        </KeyboardAvoidingView>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 200,
-        height: 200
+        height: 200,
     },
     logo_View: {
         width: 250,

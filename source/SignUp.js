@@ -4,7 +4,7 @@ import { TextInput, Button } from 'react-native-paper'
 import { launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage'
 import auth from '@react-native-firebase/auth'
-import firebase from '@react-native-firebase/storage';
+import firebase from '@react-native-firebase/firestore';
 import 'react-native-get-random-values';
 
 export default function SignUp({ navigation }) {
@@ -15,9 +15,7 @@ export default function SignUp({ navigation }) {
     const [next, Setnext] = useState(false)
     const [loading, setLoading] = useState(false)
 
-    if (loading) {
-        <ActivityIndicator size="large" color="green" />
-    }
+
     const userSingUp = async () => {
         setLoading(true)
         if (!email || !name || !pass || !email) {
@@ -66,10 +64,14 @@ export default function SignUp({ navigation }) {
     }
     return (
         <KeyboardAvoidingView style={styles.container} behavior="position">
-            <StatusBar barStyle="light-content" backgroundColor="green" />
+            <StatusBar barStyle="light-content" backgroundColor="#00bcd4" />
+            {
+                loading ?
+                    <ActivityIndicator size="large" color="#00bcd4" /> : null
+            }
             <View style={styles.logo_View}>
-                <Text style={styles.header_text}>Welcome to whatsapp</Text>
-                <Image source={require('../assests/images/WhatsApp.svg.webp')} style={styles.image} />
+                <Text style={styles.header_text}>Welcome to Chat_App</Text>
+                <Image source={require('../assests/images/images.jpg')} style={styles.image} />
             </View>
             <View style={styles.textinput_view}>
                 {!next ?
@@ -107,6 +109,7 @@ export default function SignUp({ navigation }) {
                             />
                             <Button mode="contained" style={styles.btn}
                                 onPress={() => pickImageAndUpload()}>Select profile pic</Button>
+
                             <Button mode="contained" style={styles.btn}
                                 onPress={() => userSingUp()}
                                 disabled={image ? false : true}>SIGN UP</Button>

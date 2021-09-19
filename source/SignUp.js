@@ -64,7 +64,7 @@ export default function SignUp({ navigation }) {
     }
     return (
         <KeyboardAvoidingView style={styles.container} behavior="position">
-            <StatusBar barStyle="light-content" backgroundColor="#00bcd4" />
+            <StatusBar barStyle="light-content" backgroundColor="#d3d3d3" />
             {
                 loading ?
                     <ActivityIndicator size="large" color="#00bcd4" /> : null

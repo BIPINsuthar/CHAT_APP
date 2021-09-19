@@ -1,29 +1,40 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { GiftedChat, Message } from 'react-native-gifted-chat'
+import { GiftedChat, Bubble,InputToolbar } from 'react-native-gifted-chat'
 import firestore from "@react-native-firebase/firestore";
+import {Text,View} from 'react-native'
  function Chat({navigation,user,route}) {
   const [messages, setMessages] = useState([]);
   const uid=route.params.uid;
-  const getAllMessages= async ()=>
-  {
+
+  useEffect(() => {
     const docID=uid>user.uid?user.uid+"-"+uid:uid+"-"+user.uid;
-    const query=await firestore().collection('ChatRooms')
+    const query= firestore().collection('ChatRooms')
     .doc(docID)
     .collection('messages')
     .orderBy('createdAt','desc')
-    .get()
-    const allmsg=query.docs.map(querysnap=>
-     {
-       return{
-       ...querysnap.data(),
-       createdAt:querysnap.data().createdAt.toDate()
-       }
-     }
-     )
-   setMessages(allmsg)
-  }
-  useEffect(() => {
-   getAllMessages()
+    
+    query.onSnapshot((querysnap)=>{
+      const allmsg=querysnap.docs.map(docsn=>
+        {
+          const data=docsn.data();
+          if(data.createdAt)
+          {
+            return{
+              ...docsn.data(),
+              createdAt:docsn.data().createdAt.toDate(),
+              }
+          }
+          else
+          {
+            return{
+              ...docsn.data(),
+              createdAt:new Date()
+              }
+          }
+        
+        })
+      setMessages(allmsg)
+    })
   }, [])
  
   const onSend = useCallback((messagesarray) => {
@@ -41,18 +52,37 @@ import firestore from "@react-native-firebase/firestore";
     firestore().collection('ChatRooms')
     .doc(docID)
     .collection('messages')
-    .add({...mymsg,createdAt:firestore.FieldValue.serverTimestamp()})
+    .add({...mymsg,createdAt:new Date()})
 
   }, [])
  
   return (
+    <View style={{flex:1,backgroundColor:'#d3d3d3'}}>
     <GiftedChat
       messages={messages}
       onSend={messages => onSend(messages)}
+      //onInputTextChanged={text => this.setCustomText(text)}
+      alwaysShowSend={true}
+      showUserAvatar={true}
       user={{
         _id: user.uid,
       }}
+      renderBubble={(props)=>{
+        return <Bubble {...props}
+        wrapperStyle={{
+          left:
+          {
+            backgroundColor:'white'
+          },
+          right:{
+            backgroundColor:'#00bcd4'
+          }
+        }}/>
+      }}
+      renderInputToolbar={(props)=>{
+        return <InputToolbar textInputStyle={{color:'black'}} {...props} containerStyle={{borderRadius:15}}/>
+      }}
     />
-  )
+ </View> )
 }
 export default Chat

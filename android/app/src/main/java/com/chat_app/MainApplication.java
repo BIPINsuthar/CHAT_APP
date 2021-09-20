@@ -51,7 +51,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
   /**
    * Loads Flipper in React Native templates. Call this in the onCreate method with something like
    * initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
-   *
+   *e
    * @param context
    * @param reactInstanceManager
    */

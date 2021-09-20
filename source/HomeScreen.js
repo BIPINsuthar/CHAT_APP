@@ -52,7 +52,7 @@ function HomeScreen({navigation, user}) {
       <FAB
         style={styles.fab}
         icon="face-profile"
-        color="black"
+        color="white"
         onPress={() => navigation.navigate('Account')}
       />
     </View>
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
   },
 });
 export default HomeScreen;

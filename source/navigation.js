@@ -134,7 +134,17 @@ const MyStack = ({route, navigation}) => {
             >
               {props => <Chat {...props} user={user} />}
             </Stack.Screen>
-            <Stack.Screen name="Account">
+            <Stack.Screen
+              name="Account"
+              options={{
+                headerStyle: {
+                  backgroundColor: '#00bcd4',
+                },
+                headerTintColor: 'black',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+              }}>
               {props => <Account {...props} user={user} />}
             </Stack.Screen>
           </>

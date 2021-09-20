@@ -1,5 +1,6 @@
 package com.chat_app;
-
+import java.util.List;
+ import java.util.Arrays;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -11,28 +12,22 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import androidx.multidex.MultiDexApplication; 
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import com.cboy.rn.splashscreen.SplashScreenReactPackage;
 import java.util.List;
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
-
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
         @Override
         public boolean getUseDeveloperSupport() {
           return BuildConfig.DEBUG;
         }
-
         @Override
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
-          List<ReactPackage> packages = new PackageList(this).getPackages(), new SplashScreenReactPackage() ;
-
-          // Packages that cannot be autolinked yet can be added manually here, for example:
-          // packages.add(new MyReactNativePackage());
+          List<ReactPackage> packages = new PackageList(this).getPackages() ;
+             packages.add(new SplashScreenReactPackage());
           return packages;
         }
-
         @Override
         protected String getJSMainModuleName() {
           return "index";

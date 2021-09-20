@@ -12,7 +12,9 @@ const theme = {
 };
 
 function App() {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <PaperProvider theme={theme}>
